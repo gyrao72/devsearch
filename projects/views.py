@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse
+from .models import Project
 
 
 projectsList = [
@@ -26,14 +27,11 @@ projectsList = [
 
 
 def projects(request):
-    context={'projects':projectsList}
+    projects=Project.objects.all()
+    context={'projects':projects}
     return render(request,'projects/projects.html',context)
 
 def project(request,pk):
-    projectObject=None
-
-    for i in projectsList:
-        if i['id']==str(pk):
-            projectObject=i
+    projectObj=Project.objects.get(id=pk)
             
-    return render(request,'projects/single-project.html',{'project':projectObject})
+    return render(request,'projects/single-project.html',{'project':projectObj})
