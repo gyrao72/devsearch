@@ -3,8 +3,8 @@ from django.contrib.auth import login,authenticate,logout
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.contrib.auth.models import User
-from .models import Profile
-from .forms import CustomUserCreationForm,ProfileForm,SkillForm
+from .models import Profile,Message
+from .forms import CustomUserCreationForm,ProfileForm,SkillForm,MessageForm
 from .utils import paginateProfile, searchProfiles
 
 # Create your views here.
@@ -160,4 +160,51 @@ def deleteSkill(request,pk):
 
     context={'object':skill}
     return render(request,'delete-template.html',context)
+
+
+
+@login_required(login_url='login')
+def inbox(request):
+    profile=request.user.profile
+    messageRequests=profile.messages.all()
+    unreadCount=messageRequests.filter(is_read=False).count()
+    context={'messageRequests':messageRequests,'unreadCount':unreadCount}
+    return render(request,'users/inbox.html',context)
+
+
+@login_required(login_url='login')
+def viewMessage(request,pk):
+    profile=request.user.profile
+    message=profile.messages.get(id=pk)
+
+    if message.is_read == False:
+        message.is_read=True
+        message.save()
+
+    context={'message':message}
+    return render(request,'users/message.html',context)
+
+
+@login_required(login_url='login')
+def createMessage(request,pk):
+    recipient=Profile.objects.get(id=pk)
+    form=MessageForm()
+
+    sender=request.user.profile
+
+    if request.method == 'POST':
+        form=MessageForm(request.POST)
+        if form.is_valid():
+            message=form.save(commit=False)
+            message.sender=sender
+            message.recipient=recipient
+            message.name=sender.name
+            message.email=sender.email
+            
+            message.save()
+            messages.success(request,'Message sent Successfully!')
+            return redirect('user-profile',pk=recipient.id)
+
+    context={'recipient':recipient,'form':form}
+    return render(request,'users/message_form.html',context)
 
