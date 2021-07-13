@@ -67,6 +67,10 @@ def registerUser(request):
     form=CustomUserCreationForm()
 
     if request.method=='POST':
+        if User.objects.filter(email=request.POST['email']).count() > 0:
+            messages.error(request,'Email already registered')
+            return redirect('register')
+
         form=CustomUserCreationForm(request.POST)
         if form.is_valid():
             user=form.save(commit=False)
