@@ -117,7 +117,7 @@ EMAIL_HOST='smtp.gmail.com'
 EMAIL_PORT=587
 EMAIL_USE_TLS=True
 EMAIL_HOST_USER='devsearch.test@gmail.com'
-EMAIL_HOST_PASSWORD='flaqfvnothbjlyon'
+EMAIL_HOST_PASSWORD=''
 
 
 # Static files (CSS, JavaScript, Images)
