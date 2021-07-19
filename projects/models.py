@@ -1,14 +1,15 @@
 from django.db import models
 import uuid
+from devsearch.settings import STATIC_ROOT
 
-from django.db.models.deletion import SET_NULL
+from django.db.models.deletion import CASCADE, SET_NULL
 from users.models import Profile
 
 class Project(models.Model):
-    owner=models.ForeignKey(Profile,null=True,blank=True,on_delete=SET_NULL)
+    owner=models.ForeignKey(Profile,null=True,blank=True,on_delete=CASCADE)
     title=models.CharField(max_length=200)
     description=models.TextField(null=True,blank=True)
-    featured_image=models.ImageField(null=True,blank=True,default="default.jpg")
+    featured_image=models.ImageField(null=True,blank=True,default="default.png")
     demo_link=models.CharField(max_length=2000,null=True,blank=True)
     source_link=models.CharField(max_length=2000,null=True,blank=True)
     tags=models.ManyToManyField('Tag',blank=True)
@@ -22,6 +23,14 @@ class Project(models.Model):
 
     class Meta:
         ordering=['-vote_ratio','-vote_total','title']
+
+    @property
+    def imageUrl(self):
+        try:
+            url=self.featured_image.url
+        except:
+            url=''
+        return url
 
     @property
     def reviewers(self):

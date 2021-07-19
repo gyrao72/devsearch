@@ -10,8 +10,12 @@
             <div class="card__body dev">
             <img class="avatar avatar--xl" src="{{ profile.profile_image.url }}" />
             <h2 class="dev__name">{{profile.name}}</h2>
+            {% if profile.short_intro %}
             <p class="dev__title">{{profile.short_intro}}</p>
+            {% endif %}
+            {% if profile.location %}
             <p class="dev__location">{{profile.location}}</p>
+            {% endif %}
             <ul class="dev__social">
                 {% if profile.social_github %}
                 <li>
@@ -50,13 +54,16 @@
         </div>
         </div>
         <div class="column column--2of3">
+        {% if profile.bio %}
         <div class="devInfo">
             <h3 class="devInfo__title">About Me</h3>
             <p class="devInfo__about">
                 {{profile.bio}}
             </p>
         </div>
+        {% endif %}
         <div class="devInfo">
+            {% if topSkills %}
             <h3 class="devInfo__title">Skills</h3>
             <div class="devInfo__skills">
             
@@ -68,8 +75,9 @@
                     </p>
                 </div>
             {% endfor %}
+            {% endif %}
 
-
+            {% if otherSkills %}
             <h3 class="devInfo__subtitle">Other Skills</h3>
             <div class="devInfo__otherSkills">
             {% for skill in otherSkills %}
@@ -78,6 +86,7 @@
                 </span>
             {% endfor %}
             </div>
+            {% endif %}
 
             </div>
         </div>
@@ -89,7 +98,7 @@
             <div class="column">
                 <div class="card project">
                 <a href="{ url 'project' project.id }" class="project">
-                    <img class="project__thumbnail" src="{{project.featured_image.url}}" alt="project thumbnail" />
+                    <img class="project__thumbnail" src="{{project.imageUrl}}" alt="project thumbnail" />
                     <div class="card__body">
                         <h3 class="project__title">{{project.title}}</h3>
                         <p><a class="project__author" href="{% url 'user-profile' project.owner.id %}">By {{project.owner.name}}</a></p>

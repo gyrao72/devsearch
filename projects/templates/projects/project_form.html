@@ -21,10 +21,22 @@
                 </div>
                 {% endfor %}
 
+                <div class="form__field">
+                    {% for tag in project.tags.all %}
+                    <div class="project-tag tag tag--pill tag--main" data-tag="{{tag.id}}" data-project="{{project.id}}">{{tag.name}} &#215;</div>
+                    {% endfor %}
+                </div>
+                
+                <div class="form__field">
+                    <label for="formInput#text">Tags <small style="font-size: 1.1rem;">(use space to separate tags)</small></label>
+                    <textarea class="input" name="newtags" rows="5" placeholder="Add tags here.."></textarea>
+                </div>
+
                 <input class="btn btn--sub btn--lg  my-md" type="submit" value="Submit" />
             </form>
         </div>
     </div>
 </main>
+
 
 {% endblock content %}
