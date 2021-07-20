@@ -19,7 +19,7 @@ DEBUG = True
 
 # DEBUG = False
 
-# ALLOWED_HOSTS = ['localhost', '127.0.0.1']
+ALLOWED_HOSTS = ['localhost', '127.0.0.1','https://devsearch72.herokuapp.com/']
 
 
 # Application definition
@@ -198,3 +198,7 @@ STATIC_ROOT=os.path.join(BASE_DIR,'staticfiles')
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+if os.getcwd() == '/app':
+    DEBUG = False
