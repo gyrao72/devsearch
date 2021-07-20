@@ -167,8 +167,8 @@ EMAIL_BACKEND='django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST='smtp.gmail.com'
 EMAIL_PORT=587
 EMAIL_USE_TLS=True
-EMAIL_HOST_USER='devsearch.test@gmail.com'
-EMAIL_HOST_PASSWORD='flaqfvnothbjlyon'
+EMAIL_HOST_USER=os.environ.get('EMAIL')
+EMAIL_HOST_PASSWORD=os.environ.get('EMAIL_PASS')
 
 CORS_ALLOW_ALL_ORIGINS = True
 
@@ -182,35 +182,19 @@ CORS_ALLOW_ALL_ORIGINS = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
-# STATIC_URL = '/static/'
-# MEDIA_URL='/images/'
-
-# STATICFILES_DIRS=[
-#     BASE_DIR / 'static'
-# ]
-
-# MEDIA_ROOT=os.path.join(BASE_DIR,'static/images')
-
-# # FOR SERVER
-# STATIC_ROOT=os.path.join(BASE_DIR,'staticfiles')
-
-# STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
-
 STATIC_URL = '/static/'
+MEDIA_URL='/images/'
 
-STATICFILES_DIRS = (
-    os.path.join(BASE_DIR, "static"),
-)
+STATICFILES_DIRS=[
+    BASE_DIR / 'static'
+]
 
-STATIC_ROOT = os.path.join(BASE_DIR, "live-static-files", "static-root")
+MEDIA_ROOT=os.path.join(BASE_DIR,'static/images')
+
+# FOR SERVER
+STATIC_ROOT=os.path.join(BASE_DIR,'staticfiles')
 
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
-
-#STATIC_ROOT = "/home/cfedeploy/webapps/cfehome_static_root/"
-
-MEDIA_URL = "/media/"
-
-MEDIA_ROOT = os.path.join(BASE_DIR, "live-static-files", "media-root")
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
