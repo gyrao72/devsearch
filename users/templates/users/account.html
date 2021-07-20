@@ -11,9 +11,12 @@
             <a class="tag tag--pill tag--main settings__btn" href="{% url 'edit-account' %}"><i class="im im-edit"></i> Edit</a>
             <img class="avatar avatar--xl dev__avatar" src="{{profile.imageUrl}}" />
             <h2 class="dev__name">{{profile.name}}</h2>
+            {% if profile.short_intro %}
             <p class="dev__title">{{profile.short_intro}}</p>
-            <p class="dev__location">Based in {{profile.location}}</p>
-
+            {% endif %}
+            {% if profile.location %}
+            <p class="dev__location">Based in <b>{{profile.location}}</b></p>
+            {% endif %}
             <ul class="dev__social">
                 {% if profile.social_github %}
                 <li>
