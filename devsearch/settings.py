@@ -182,19 +182,35 @@ CORS_ALLOW_ALL_ORIGINS = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
+# STATIC_URL = '/static/'
+# MEDIA_URL='/images/'
+
+# STATICFILES_DIRS=[
+#     BASE_DIR / 'static'
+# ]
+
+# MEDIA_ROOT=os.path.join(BASE_DIR,'static/images')
+
+# # FOR SERVER
+# STATIC_ROOT=os.path.join(BASE_DIR,'staticfiles')
+
+# STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
 STATIC_URL = '/static/'
-MEDIA_URL='/images/'
 
-STATICFILES_DIRS=[
-    BASE_DIR / 'static'
-]
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, "static"),
+)
 
-MEDIA_ROOT=os.path.join(BASE_DIR,'static/images')
-
-# FOR SERVER
-STATIC_ROOT=os.path.join(BASE_DIR,'staticfiles')
+STATIC_ROOT = os.path.join(BASE_DIR, "live-static-files", "static-root")
 
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+#STATIC_ROOT = "/home/cfedeploy/webapps/cfehome_static_root/"
+
+MEDIA_URL = "/media/"
+
+MEDIA_ROOT = os.path.join(BASE_DIR, "live-static-files", "media-root")
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
