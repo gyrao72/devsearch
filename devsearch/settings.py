@@ -36,6 +36,7 @@ INSTALLED_APPS = [
     'users.apps.UsersConfig',
     'rest_framework',
     'corsheaders',
+    'storages',
 ]
 
 REST_FRAMEWORK = {
@@ -111,23 +112,23 @@ WSGI_APPLICATION = 'devsearch.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
-}
-
 # DATABASES = {
 #     'default': {
-#         'ENGINE': 'django.db.backends.postgresql',
-#         'NAME': 'devsearch',
-#         'USER':'postgres',
-#         'PASSWORD':'Allen123',
-#         'HOST':'localhost',
-#         'PORT':'5432',
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
 #     }
 # }
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'devsearch',
+        'USER':'postgres',
+        'PASSWORD':os.environ.get('DB_PASS'),
+        'HOST':os.environ.get('HOST_URI'),
+        'PORT':'5432',
+    }
+}
 
 
 # Password validation
@@ -190,11 +191,9 @@ STATICFILES_DIRS=[
 ]
 
 MEDIA_ROOT=os.path.join(BASE_DIR,'static/images')
-
-# FOR SERVER
 STATIC_ROOT=os.path.join(BASE_DIR,'staticfiles')
 
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+# STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
@@ -204,3 +203,15 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 if os.getcwd() == '/app':
     DEBUG = False
+
+DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+
+AWS_QUERYSTRING_AUTH = False
+
+AWS_S3_FILE_OVERWRITE = False
+
+AWS_ACCESS_KEY_ID = os.environ.get('AWS_ACCESS')
+
+AWS_SECRET_ACCESS_KEY = os.environ.get('AWS_SECRET')
+
+AWS_STORAGE_BUCKET_NAME = os.environ.get('S3_BUCKET')
